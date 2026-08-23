@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0878d1" />
+    <meta name="description" content="Viet Anh School PIS interactive vocabulary lessons." />
+    <title>PIS Vocabulary Adventure | Viet Anh School</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#lesson">Skip to lesson</a>
+
+    <div class="sky-decor decor-one" aria-hidden="true">✦</div>
+    <div class="sky-decor decor-two" aria-hidden="true">✧</div>
+    <div class="sky-decor decor-three" aria-hidden="true">★</div>
+
+    <header class="hero">
+      <nav class="school-bar" aria-label="School information">
+        <a class="school-brand" href="#" aria-label="Viet Anh School home">
+          <span class="brand-mark" aria-hidden="true">VA</span>
+          <span>
+            <strong>VIET ANH SCHOOL</strong>
+            <small>Learn today • Lead tomorrow</small>
+          </span>
+        </a>
+        <div class="school-meta">
+          <span><b>Level</b> PIS</span>
+          <span><b>Teacher</b> Mr. Hà Chí Thanh</span>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <span class="eyebrow">✨ PIS VOCABULARY ADVENTURE</span>
+          <h1>Unit 1: <span>Great Places to Be</span></h1>
+          <p>Build your word power through colourful lessons, flip cards, and quick matching challenges.</p>
+          <div class="hero-stats" aria-label="Unit statistics">
+            <span>📚 <strong>3</strong> sections</span>
+            <span>🔤 <strong>56</strong> words</span>
+            <span>🔊 Cambridge <strong>US</strong> audio</span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="planet">🌎</div>
+          <div class="cloud cloud-a">☁️</div>
+          <div class="cloud cloud-b">☁️</div>
+          <div class="pencil">✏️</div>
+          <div class="book">📖</div>
+          <div class="star star-a">⭐</div>
+          <div class="star star-b">✨</div>
+        </div>
+      </div>
+    </header>
+
+    <main id="lesson" class="lesson-shell">
+      <section class="unit-toolbar" aria-labelledby="unit-heading">
+        <div>
+          <span class="mini-label">CURRENT MISSION</span>
+          <h2 id="unit-heading">Choose a vocabulary section</h2>
+        </div>
+        <div class="overall-progress" aria-label="Overall learning progress">
+          <div class="progress-copy">
+            <span>Your progress</span>
+            <strong id="overall-progress-text">0 / 56 learned</strong>
+          </div>
+          <div class="progress-track"><span id="overall-progress-bar"></span></div>
+        </div>
+      </section>
+
+      <nav id="section-tabs" class="section-tabs" aria-label="Unit 1 sections"></nav>
+
+      <section class="workspace">
+        <div class="section-heading">
+          <div id="section-icon" class="section-icon" aria-hidden="true">🏙️</div>
+          <div>
+            <span id="section-kicker" class="mini-label">UNIT 1 • READING 1</span>
+            <h2 id="section-title">Reading 1 Vocabulary</h2>
+            <p id="section-description">Study every word, listen carefully, then practise.</p>
+          </div>
+          <div id="section-count" class="count-chip">23 words</div>
+        </div>
+
+        <nav id="mode-tabs" class="mode-tabs" aria-label="Learning modes">
+          <button type="button" class="mode-tab active" data-mode="learn" aria-selected="true">
+            <span>📘</span><b>Learn</b><small>Vocabulary first</small>
+          </button>
+          <button type="button" class="mode-tab" data-mode="flashcards" aria-selected="false">
+            <span>🃏</span><b>Flashcards</b><small>Flip & remember</small>
+          </button>
+          <button type="button" class="mode-tab" data-mode="matching" aria-selected="false">
+            <span>🧩</span><b>Matching</b><small>Match the meaning</small>
+          </button>
+        </nav>
+
+        <div id="mode-content" class="mode-content" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div>
+        <span class="brand-mark small" aria-hidden="true">VA</span>
+        <p><strong>Viet Anh School • PIS Vocabulary</strong><br />Teacher: Mr. Hà Chí Thanh</p>
+      </div>
+      <p>Pronunciation buttons use Cambridge Dictionary US audio with a US voice fallback.</p>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
