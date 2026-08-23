@@ -33,11 +33,11 @@
       <div class="hero-content">
         <div class="hero-copy">
           <span class="eyebrow">✨ PIS VOCABULARY ADVENTURE</span>
-          <h1>Unit 1: <span>Great Places to Be</span></h1>
-          <p>Build your word power through colourful lessons, flip cards, and quick matching challenges.</p>
+          <h1><span id="hero-unit-number" class="hero-unit-number">Unit 1:</span> <span id="hero-unit-title">Great Places to Be</span></h1>
+          <p id="hero-unit-subtitle">Build your word power through colourful lessons, flip cards, and quick matching challenges.</p>
           <div class="hero-stats" aria-label="Unit statistics">
-            <span>📚 <strong>3</strong> sections</span>
-            <span>🔤 <strong>56</strong> words</span>
+            <span>📚 <strong id="hero-section-count">3</strong> sections</span>
+            <span>🔤 <strong id="hero-word-count">56</strong> words</span>
             <span>🔊 Cambridge <strong>US</strong> audio</span>
           </div>
         </div>
@@ -54,10 +54,23 @@
     </header>
 
     <main id="lesson" class="lesson-shell">
+      <section class="unit-switcher" aria-labelledby="course-heading">
+        <div class="unit-switcher-copy">
+          <span class="mini-label">PIS VOCABULARY COURSE</span>
+          <h2 id="course-heading">Choose your unit</h2>
+          <p>Available units open instantly. The remaining units are ready to receive their vocabulary data.</p>
+        </div>
+        <label class="unit-select-wrap" for="unit-select">
+          <span>📚 Select unit</span>
+          <select id="unit-select" aria-label="Choose a vocabulary unit"></select>
+        </label>
+        <div id="course-status" class="course-status" aria-live="polite"></div>
+      </section>
+
       <section class="unit-toolbar" aria-labelledby="unit-heading">
         <div>
           <span class="mini-label">CURRENT MISSION</span>
-          <h2 id="unit-heading">Choose a vocabulary section</h2>
+          <h2 id="unit-heading">Choose a section</h2>
         </div>
         <div class="overall-progress" aria-label="Overall learning progress">
           <div class="progress-copy">
@@ -68,7 +81,7 @@
         </div>
       </section>
 
-      <nav id="section-tabs" class="section-tabs" aria-label="Unit 1 sections"></nav>
+      <nav id="section-tabs" class="section-tabs" aria-label="Vocabulary sections"></nav>
 
       <section class="workspace">
         <div class="section-heading">
