@@ -1,4 +1,4 @@
-import { unit1 } from "./data/unit1.js";
+import { availableUnits, unitsRegistry } from "./data/units.js";
 
 const CAMBRIDGE_AUDIO_BASE = "https://dictionary.cambridge.org/media/english/us_pron/";
 const CAMBRIDGE_DICTIONARY_BASE = "https://dictionary.cambridge.org/dictionary/english/";
@@ -16,6 +16,16 @@ const sectionCount = document.querySelector("#section-count");
 const overallProgressText = document.querySelector("#overall-progress-text");
 const overallProgressBar = document.querySelector("#overall-progress-bar");
 const toast = document.querySelector("#toast");
+const unitSelect = document.querySelector("#unit-select");
+const courseStatus = document.querySelector("#course-status");
+const unitHeading = document.querySelector("#unit-heading");
+const heroUnitNumber = document.querySelector("#hero-unit-number");
+const heroUnitTitle = document.querySelector("#hero-unit-title");
+const heroUnitSubtitle = document.querySelector("#hero-unit-subtitle");
+const heroSectionCount = document.querySelector("#hero-section-count");
+const heroWordCount = document.querySelector("#hero-word-count");
+
+let unit = null;
 
 const state = {
   activeSection: 0,
@@ -42,7 +52,7 @@ function saveLearnedWords() {
 }
 
 function wordKey(section, word) {
-  return `${section.id}:${word.word}`;
+  return `${unit.id}:${section.id}:${word.word}`;
 }
 
 function escapeHtml(value) {
@@ -64,7 +74,69 @@ function shuffle(items) {
 }
 
 function currentSection() {
-  return unit1.sections[state.activeSection];
+  return unit.sections[state.activeSection];
+}
+
+function validateUnit(candidate) {
+  if (!candidate || !candidate.id || !candidate.number || !candidate.title || !Array.isArray(candidate.sections) || !candidate.sections.length) {
+    throw new Error("The unit data does not follow the required schema.");
+  }
+
+  candidate.sections.forEach((section) => {
+    if (!section.id || !section.label || !Array.isArray(section.words)) {
+      throw new Error(`Invalid section data in ${candidate.id}.`);
+    }
+  });
+}
+
+async function loadUnit(unitId, { updateHistory = true } = {}) {
+  const fallback = availableUnits()[0];
+  const requested = unitsRegistry.find((item) => item.id === unitId);
+  const target = requested?.status === "available" && requested.module ? requested : fallback;
+
+  if (!target) {
+    throw new Error("No vocabulary unit is currently available.");
+  }
+
+  state.activeAudio?.pause();
+  window.speechSynthesis?.cancel();
+  const unitModule = await import(target.module);
+  validateUnit(unitModule.default);
+  unit = unitModule.default;
+  state.activeSection = 0;
+  state.mode = "learn";
+  state.flashDecks.clear();
+  state.flashIndexes.clear();
+  state.matching.clear();
+
+  if (updateHistory || window.location.hash !== `#${unit.id}`) {
+    window.history.replaceState(null, "", `#${unit.id}`);
+  }
+
+  renderAll();
+}
+
+function renderUnitSelector() {
+  unitSelect.innerHTML = unitsRegistry.map((item) => {
+    const available = item.status === "available" && item.module;
+    const suffix = available ? "Available" : "Coming soon";
+    return `<option value="${item.id}" ${item.id === unit.id ? "selected" : ""} ${available ? "" : "disabled"}>${item.icon} Unit ${item.number} — ${escapeHtml(item.title)} (${suffix})</option>`;
+  }).join("");
+
+  const ready = availableUnits().length;
+  courseStatus.innerHTML = `<strong>${ready}/${unitsRegistry.length}</strong><span>units available</span>`;
+}
+
+function updateUnitShell() {
+  const totalWords = unit.sections.reduce((sum, section) => sum + section.words.length, 0);
+  heroUnitNumber.textContent = `Unit ${unit.number}:`;
+  heroUnitTitle.textContent = unit.title;
+  heroUnitSubtitle.textContent = unit.subtitle;
+  heroSectionCount.textContent = unit.sections.length;
+  heroWordCount.textContent = totalWords;
+  unitHeading.textContent = `Unit ${unit.number}: Choose a section`;
+  sectionTabs.setAttribute("aria-label", `Unit ${unit.number} vocabulary sections`);
+  document.title = `Unit ${unit.number}: ${unit.title} | PIS Vocabulary`;
 }
 
 function showToast(message) {
@@ -156,7 +228,7 @@ function playPronunciation(word, button) {
 }
 
 function renderSectionTabs() {
-  sectionTabs.innerHTML = unit1.sections.map((section, index) => {
+  sectionTabs.innerHTML = unit.sections.map((section, index) => {
     const learnedCount = section.words.filter((word) => state.learned.has(wordKey(section, word))).length;
     return `
       <button
@@ -185,7 +257,7 @@ function renderSectionTabs() {
 function renderSectionHeading() {
   const section = currentSection();
   sectionIcon.textContent = section.icon;
-  sectionKicker.textContent = `Unit ${unit1.number} • ${section.label}`;
+  sectionKicker.textContent = `Unit ${unit.number} • ${section.label}`;
   sectionTitle.textContent = `${section.label} Vocabulary`;
   sectionDescription.textContent = `Study ${section.words.length} words, hear the US pronunciation, then practise until they stick.`;
   sectionCount.textContent = `${section.words.length} words`;
@@ -200,8 +272,8 @@ function updateModeTabs() {
 }
 
 function updateOverallProgress() {
-  const total = unit1.sections.reduce((sum, section) => sum + section.words.length, 0);
-  const learned = unit1.sections.reduce(
+  const total = unit.sections.reduce((sum, section) => sum + section.words.length, 0);
+  const learned = unit.sections.reduce(
     (sum, section) => sum + section.words.filter((word) => state.learned.has(wordKey(section, word))).length,
     0
   );
@@ -508,6 +580,8 @@ function renderMode() {
 }
 
 function renderAll() {
+  updateUnitShell();
+  renderUnitSelector();
   renderSectionTabs();
   renderSectionHeading();
   updateModeTabs();
@@ -523,4 +597,21 @@ modeTabs.forEach((button) => {
   });
 });
 
-renderAll();
+unitSelect.addEventListener("change", () => {
+  loadUnit(unitSelect.value).catch((error) => {
+    showToast(error.message);
+    renderUnitSelector();
+  });
+});
+
+window.addEventListener("hashchange", () => {
+  const requestedId = window.location.hash.slice(1);
+  if (requestedId && requestedId !== unit?.id) {
+    loadUnit(requestedId, { updateHistory: false }).catch((error) => showToast(error.message));
+  }
+});
+
+const requestedUnitId = window.location.hash.slice(1) || availableUnits()[0]?.id;
+loadUnit(requestedUnitId).catch((error) => {
+  modeContent.innerHTML = `<div class="empty-state"><span>⚠️</span>${escapeHtml(error.message)}</div>`;
+});
