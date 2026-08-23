@@ -18,6 +18,8 @@
   --radius-xl: 30px;
   --radius-lg: 22px;
   --radius-md: 16px;
+  --font-vietnamese: Arial, "Segoe UI", "Noto Sans", "DejaVu Sans", sans-serif;
+  --font-phonetic: Arial, "Segoe UI Symbol", "Noto Sans", "DejaVu Sans", sans-serif;
 }
 
 * {
@@ -36,8 +38,10 @@ body {
     radial-gradient(circle at 12% 24%, rgba(255, 232, 105, 0.35) 0 3px, transparent 4px),
     radial-gradient(circle at 85% 37%, rgba(18, 198, 180, 0.25) 0 4px, transparent 5px),
     linear-gradient(180deg, #eafaff 0, #fffef8 38rem, #effdfa 100%);
-  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-family: var(--font-vietnamese);
   line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -672,7 +676,7 @@ footer {
 .word-text p {
   margin: 2px 0 0;
   color: var(--teal-700);
-  font-family: Arial, sans-serif;
+  font-family: var(--font-phonetic);
   font-size: 0.86rem;
   font-weight: 700;
 }
@@ -899,7 +903,7 @@ footer {
 .flash-front .flash-ipa {
   margin: 12px 0 0;
   color: #e7fcff;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-phonetic);
   font-size: 1.05rem;
 }
 
