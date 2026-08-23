@@ -86,3 +86,5 @@ export const unit1 = {
     }
   ]
 };
+
+export default unit1;
