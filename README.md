@@ -3,13 +3,13 @@
 Interactive vocabulary website for Viet Anh School, Level PIS.
 
 - Teacher: Mr. Hà Chí Thanh
-- Current content: Unit 1 — Great Places to Be
-- Course configuration: Units 1–10 are registered and ready for gradual publishing
-- Sections: Reading 1, Reading 2, Writing
+- Current content: Units 1–10 — 455 reviewed vocabulary items
+- Course configuration: all units are published through one reusable data schema
+- Sections: Reading, Listening, and Writing as supplied in each unit
 - Modes in every section: Learn, Flashcards, Matching Meaning
 - Pronunciation: Cambridge Dictionary US audio links with a browser US-voice fallback
 
-## Unit 1 content review
+## Content review
 
 The source list was standardised before publishing. Key corrections include:
 
@@ -20,6 +20,9 @@ The source list was standardised before publishing. Key corrections include:
 - clarified `influence / be influenced by` and its Vietnamese meaning;
 - refined inaccurate or unnatural meanings/examples for `social`, `medicine`, `pleasure`, `boating`, `common`, and `private`;
 - corrected phrase labels such as `basic needs` and `university qualification` to `noun phrase`.
+- corrected Unit 9's title to `Every Drop Counts`;
+- fixed clear pronunciation, grammar, part-of-speech, and example errors such as `corps`, `occupation`, `theory`, `implication`, `commission`, and `downbeat`;
+- normalised teachable forms such as `get rid of`, `rush hour`, `irrigate`, `snake`, and `multifunctional` while retaining source forms in the data where useful.
 
 ## Structure
 
@@ -28,7 +31,7 @@ index.html       Page structure and school branding
 styles.css       Responsive blue–teal–yellow cartoon theme
 app.js           Dynamic unit loader, tabs, audio, flashcards, matching, and progress
 data/units.js    Central registry for Units 1–10
-data/unit1.js    Reviewed Unit 1 vocabulary data
+data/unit1.js … data/unit10.js    Reviewed vocabulary data for the full course
 data/unit-template.js  Reusable schema for every new unit
 ```
 
