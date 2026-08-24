@@ -812,16 +812,60 @@ footer {
   background: linear-gradient(145deg, var(--teal-500), var(--teal-700));
 }
 
-.pos-badge {
+.word-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 13px 0 8px;
+}
+
+.number-badge,
+.pos-badge,
+.level-badge,
+.band-badge {
   display: inline-flex;
-  margin: 13px 0 7px;
   padding: 4px 9px;
-  color: #866000;
-  background: #fff5c6;
   border-radius: 999px;
   font-size: 0.69rem;
   font-weight: 900;
+}
+
+.number-badge {
+  color: #fff;
+  background: var(--blue-700);
+}
+
+.pos-badge {
+  color: #866000;
+  background: #fff5c6;
   text-transform: uppercase;
+}
+
+.level-badge {
+  color: #075d9d;
+  background: #e1f4ff;
+}
+
+.band-badge.core {
+  color: #576d7d;
+  background: #edf3f6;
+}
+
+.band-badge.expanded {
+  color: #08705f;
+  background: #dff8ef;
+}
+
+.band-badge.advanced {
+  color: #7145a1;
+  background: #f1e7ff;
+}
+
+.definition {
+  margin: 0 0 7px;
+  color: #4d6477;
+  font-size: 0.84rem;
+  line-height: 1.45;
 }
 
 .meaning {
@@ -844,6 +888,15 @@ footer {
   margin-top: 4px;
   color: #738598;
   font-size: 0.78rem;
+}
+
+.book-source {
+  display: block;
+  margin-top: 8px;
+  color: #648095;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 800;
 }
 
 .card-actions {
@@ -1005,6 +1058,16 @@ footer {
   font-size: 1.05rem;
 }
 
+.flash-level {
+  margin-top: 9px;
+  padding: 5px 10px;
+  color: #e7fcff;
+  background: rgba(0, 63, 103, 0.2);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
 .flip-hint {
   position: absolute;
   bottom: 22px;
@@ -1014,6 +1077,15 @@ footer {
 
 .flash-back h3 {
   color: var(--blue-900);
+  font-size: clamp(1.45rem, 4vw, 2.25rem);
+}
+
+.flash-back .flash-emoji {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  border-radius: 20px 12px 20px 12px;
+  font-size: 2.35rem;
 }
 
 .flash-meaning {
@@ -1024,10 +1096,27 @@ footer {
   text-align: center;
 }
 
+.flash-definition {
+  max-width: 470px;
+  margin: 10px 0 0;
+  color: #4d6477;
+  font-size: 0.86rem;
+  text-align: center;
+}
+
 .flash-example {
   max-width: 470px;
   margin: 8px 0 0;
   color: var(--muted);
+  text-align: center;
+}
+
+.flash-book-source {
+  max-width: 470px;
+  margin-top: 10px;
+  color: #648095;
+  font-size: 0.68rem;
+  font-weight: 800;
   text-align: center;
 }
 

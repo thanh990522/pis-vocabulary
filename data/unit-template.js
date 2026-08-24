@@ -18,9 +18,13 @@ export const unitTemplate = {
           word: "example",
           ipa: "/ɪɡˈzæm.pəl/",
           pos: "noun",
+          level: "B1-B2",
+          band: "Expanded",
+          definition: "something that shows what a general idea is like",
           meaning: "ví dụ",
           example: "This is a simple example sentence.",
           translation: "Đây là một câu ví dụ đơn giản.",
+          source: "SB p. X",
           icon: "💡"
         }
       ]

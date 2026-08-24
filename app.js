@@ -256,11 +256,13 @@ function renderSectionTabs() {
 
 function renderSectionHeading() {
   const section = currentSection();
+  const expandedCount = section.words.filter((word) => word.band && word.band !== "Core").length;
+  const advancedCount = section.words.filter((word) => word.band === "Advanced").length;
   sectionIcon.textContent = section.icon;
   sectionKicker.textContent = `Unit ${unit.number} • ${section.label}`;
   sectionTitle.textContent = `${section.label} Vocabulary`;
-  sectionDescription.textContent = `Study ${section.words.length} words, hear the US pronunciation, then practise until they stick.`;
-  sectionCount.textContent = `${section.words.length} words`;
+  sectionDescription.textContent = `Study ${section.words.length} terms, including ${expandedCount} expanded items and ${advancedCount} higher-level items.`;
+  sectionCount.textContent = `${section.words.length} terms`;
 }
 
 function updateModeTabs() {
@@ -285,7 +287,8 @@ function renderLearn(query = "") {
   const section = currentSection();
   const normalizedQuery = query.trim().toLowerCase();
   const filteredWords = section.words.filter((word) =>
-    [word.word, word.meaning, word.pos].some((field) => field.toLowerCase().includes(normalizedQuery))
+    [word.word, word.meaning, word.pos, word.definition, word.level, word.band, word.source]
+      .some((field) => String(field ?? "").toLowerCase().includes(normalizedQuery))
   );
 
   modeContent.innerHTML = `
@@ -293,7 +296,7 @@ function renderLearn(query = "") {
       <p>Tap <strong>🔊 US</strong> to listen. Mark each word when you feel confident.</p>
       <label class="search-box">
         <span aria-hidden="true">🔎</span>
-        <input id="vocab-search" type="search" value="${escapeHtml(query)}" placeholder="Search words or meanings…" aria-label="Search vocabulary" />
+        <input id="vocab-search" type="search" value="${escapeHtml(query)}" placeholder="Search terms, meanings, levels or sources…" aria-label="Search vocabulary" />
       </label>
     </div>
     <div class="vocab-grid">
@@ -323,6 +326,7 @@ function renderLearn(query = "") {
 function renderVocabCard(section, word) {
   const index = section.words.indexOf(word);
   const learned = state.learned.has(wordKey(section, word));
+  const bandClass = String(word.band || "Core").toLowerCase();
   return `
     <article class="vocab-card ${learned ? "learned" : ""}">
       <div class="word-row">
@@ -333,9 +337,18 @@ function renderVocabCard(section, word) {
         </div>
         <button class="audio-button" type="button" data-word-index="${index}" aria-label="Play the US pronunciation of ${escapeHtml(word.word)}">🔊 US</button>
       </div>
-      <span class="pos-badge">${escapeHtml(word.pos)}</span>
+      <div class="word-badges">
+        <span class="number-badge">No. ${index + 1}</span>
+        <span class="pos-badge">${escapeHtml(word.pos)}</span>
+        ${word.level ? `<span class="level-badge">CEFR ${escapeHtml(word.level)}</span>` : ""}
+        ${word.band ? `<span class="band-badge ${escapeHtml(bandClass)}">${escapeHtml(word.band)}</span>` : ""}
+      </div>
+      ${word.definition ? `<p class="definition">${escapeHtml(word.definition)}</p>` : ""}
       <p class="meaning">🇻🇳 ${escapeHtml(word.meaning)}</p>
-      <p class="example">“${escapeHtml(word.example)}”<em>${escapeHtml(word.translation)}</em></p>
+      <p class="example">“${escapeHtml(word.example)}”
+        ${word.translation ? `<em>${escapeHtml(word.translation)}</em>` : ""}
+        ${word.source ? `<small class="book-source">📘 ${escapeHtml(word.source)}</small>` : ""}
+      </p>
       <div class="card-actions">
         <a class="dictionary-link" href="${dictionaryUrl(word)}" target="_blank" rel="noopener noreferrer">Cambridge source ↗</a>
         <button class="learn-button ${learned ? "is-learned" : ""}" type="button" data-word-index="${index}">${learned ? "✓ Learned" : "+ Mark learned"}</button>
@@ -373,13 +386,16 @@ function renderFlashcards() {
               <span class="flash-emoji" aria-hidden="true">${word.icon}</span>
               <h3>${escapeHtml(word.word)}</h3>
               <span class="flash-ipa">${escapeHtml(word.ipa)}</span>
+              <span class="flash-level">${escapeHtml(word.level || "")} ${word.band ? `• ${escapeHtml(word.band)}` : ""}</span>
               <span class="flip-hint">Tap to reveal the meaning ↻</span>
             </span>
             <span class="flash-face flash-back">
               <span class="flash-emoji" aria-hidden="true">${word.icon}</span>
               <h3>${escapeHtml(word.word)}</h3>
+              ${word.definition ? `<p class="flash-definition">${escapeHtml(word.definition)}</p>` : ""}
               <p class="flash-meaning">${escapeHtml(word.meaning)}</p>
               <p class="flash-example">${escapeHtml(word.example)}</p>
+              ${word.source ? `<small class="flash-book-source">📘 ${escapeHtml(word.source)}</small>` : ""}
               <span class="flip-hint" style="color:#71859a">Tap to see the front ↻</span>
             </span>
           </span>

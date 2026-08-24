@@ -1,0 +1,93 @@
+{
+  "entries": 774,
+  "units": 10,
+  "sections": 46,
+  "core": 455,
+  "expanded": 209,
+  "advanced": 110,
+  "cefr": {
+    "B1": 41,
+    "B1-B2": 588,
+    "B2": 145
+  },
+  "bySkill": {
+    "Reading": 460,
+    "Listening": 104,
+    "Speaking": 80,
+    "Writing": 130
+  },
+  "byUnit": {
+    "1": 88,
+    "2": 75,
+    "3": 69,
+    "4": 73,
+    "5": 96,
+    "6": 70,
+    "7": 62,
+    "8": 67,
+    "9": 86,
+    "10": 88
+  },
+  "byUnitSkill": {
+    "1": {
+      "Reading": 54,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 18
+    },
+    "2": {
+      "Reading": 44,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 15
+    },
+    "3": {
+      "Reading": 45,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 8
+    },
+    "4": {
+      "Reading": 49,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 8
+    },
+    "5": {
+      "Reading": 72,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 8
+    },
+    "6": {
+      "Reading": 46,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 8
+    },
+    "7": {
+      "Reading": 33,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 13
+    },
+    "8": {
+      "Reading": 35,
+      "Listening": 8,
+      "Speaking": 8,
+      "Writing": 16
+    },
+    "9": {
+      "Reading": 36,
+      "Listening": 19,
+      "Speaking": 8,
+      "Writing": 23
+    },
+    "10": {
+      "Reading": 46,
+      "Listening": 21,
+      "Speaking": 8,
+      "Writing": 13
+    }
+  }
+}
